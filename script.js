@@ -11,6 +11,7 @@ var firstEl = document.getElementById("first");
 var questionBoxEl = document.getElementById("questionBox");
 
 var questionIndex = 0;
+var timer = 60;
 
 
 
@@ -100,6 +101,8 @@ var questionList = [
 ]
 
 quizStartEl.addEventListener("click", function(event) {
+    timerEl.innerHTML = timer;
+    setInterval(timerUpdate, 1000);
     firstEl.classList.add("d-none");
     questionBoxEl.classList.remove("d-none");
     askQuestions();
@@ -112,6 +115,14 @@ function askQuestions() {
     answerBEl.innerHTML = questionList[questionIndex].b;
     answerCEl.innerHTML = questionList[questionIndex].c;
     answerDEl.innerHTML = questionList[questionIndex].d;
+}
+
+function timerUpdate() {
+    timer--;
+    timerEl.innerHTML = timer;
+    if (timer === 0) {
+        
+    }
 }
 
 
