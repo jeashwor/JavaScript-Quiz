@@ -98,7 +98,7 @@ var questionList = [
 
 var lastQuestion = questionList.length -1;
 var questionIndex = 0;
-var timer = 60;
+var timer = 100;
 
 
 
@@ -125,7 +125,6 @@ function timerUpdate() {
 function checkAnswer(answer) {
     if ( answer == questionList[questionIndex].correct) {
         // answer is correct
-        event.preventDefault();
         questionIndex++;
         correctEl.classList.remove("d-none");
         setTimeout(function() {
@@ -134,7 +133,6 @@ function checkAnswer(answer) {
         }, 2000);
     } else {
         // answer is wrong
-        event.preventDefault();
         questionIndex++;
         wrongEl.classList.remove("d-none");
         timer = timer - 10;
