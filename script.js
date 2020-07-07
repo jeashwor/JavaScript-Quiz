@@ -130,7 +130,7 @@ function checkAnswer(answer) {
         setTimeout(function() {
             correctEl.classList.add("d-none");
             askQuestions();
-        }, 2000);
+        }, 1000);
     } else {
         // answer is wrong
         questionIndex++;
@@ -139,7 +139,7 @@ function checkAnswer(answer) {
         setTimeout(function() {
             wrongEl.classList.add("d-none");
             askQuestions();
-        }, 2000);
+        }, 1000);
     }
 } 
 
