@@ -9,12 +9,8 @@ var answerCEl = document.getElementById("c");
 var answerDEl = document.getElementById("d");
 var firstEl = document.getElementById("first");
 var questionBoxEl = document.getElementById("questionBox");
-
-var questionIndex = 0;
-var timer = 60;
-
-
-
+var correctEl = document.getElementById("correct");
+var wrongEl = document.getElementById("wrong");
 
 // Create Object with list of questions, possible answers, and correct answer
 var questionList = [
@@ -100,13 +96,12 @@ var questionList = [
     },
 ]
 
-quizStartEl.addEventListener("click", function(event) {
-    timerEl.innerHTML = timer;
-    setInterval(timerUpdate, 1000);
-    firstEl.classList.add("d-none");
-    questionBoxEl.classList.remove("d-none");
-    askQuestions();
-})
+var lastQuestion = questionList.length -1;
+var questionIndex = 0;
+var timer = 60;
+
+
+
 
 
 function askQuestions() {
@@ -118,11 +113,45 @@ function askQuestions() {
 }
 
 function timerUpdate() {
-    timer--;
-    timerEl.innerHTML = timer;
-    if (timer === 0) {
-        
-    }
+    var myInterval = setInterval(function () {
+        timer--;
+        timerEl.innerHTML = timer;
+        if (timer == 0) {
+            clearInterval(myInterval);
+        }
+    }, 1000)
 }
+
+function checkAnswer(answer) {
+    if ( answer == questionList[questionIndex].correct) {
+        // answer is correct
+        event.preventDefault();
+        questionIndex++;
+        correctEl.classList.remove("d-none");
+        setTimeout(function() {
+            correctEl.classList.add("d-none");
+            askQuestions();
+        }, 2000);
+    } else {
+        // answer is wrong
+        event.preventDefault();
+        questionIndex++;
+        wrongEl.classList.remove("d-none");
+        timer = timer - 10;
+        setTimeout(function() {
+            wrongEl.classList.add("d-none");
+            askQuestions();
+        }, 2000);
+    }
+} 
+
+quizStartEl.addEventListener("click", function (event) {
+    timerEl.innerHTML = timer;
+    timerUpdate();
+    firstEl.classList.add("d-none");
+    questionBoxEl.classList.remove("d-none");
+    askQuestions();
+})
+
 
 
