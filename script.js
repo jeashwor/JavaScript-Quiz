@@ -193,21 +193,23 @@ function addHighScore() {
     if (userScores !== null) {
         var newUserScoreObject = JSON.parse(userScores);
         sortArray(newUserScoreObject);
-        for ( var i = 0; i <= newUserScoreObject.length; i++) {
+        for ( var i = 0; i < newUserScoreObject.length; i++) {
             var newScoreDiv = document.createElement("li");
             newScoreDiv.setAttribute("class", "scoreItem");
             newScoreDiv.setAttribute("id", "hs" + highScoreCounter);
-            newScoreDiv.innerHTML = newUserScoreObject[i].user + " - " + newUserScoreObject[i].score;
+            newScoreDiv.textContent = newUserScoreObject[i].user + " - " + newUserScoreObject[i].score;
             highScoreLocationEl.append(newScoreDiv);
         }
+    } else {
+        return;
     }
-}
+};
 
 // Function to clear scores in local storage and on screen when button is pressed.
 function clearScore() {
     localStorage.removeItem("initials");
-    var hsItemEl = document.getElementsByClassName("scoreItem");
-    hsItemEl.remove();
+    var highScoreLocationEl = document.getElementById("highScoreLocation");
+    highScoreLocationEl.parentNode.removeChild(highScoreLocationEl);
     highScoreCounter = 0;
 };
 

@@ -1,8 +1,0 @@
-#Element Breakdown
-1. Create index.html document with the following. 
-    - Header containing Link to Hight Score Sheet and Timer.
-    - Div area for Start area in addition to question with (4) buttons. 
-    - Div area for correct / wrong to populate.   
-
-2. Javascript file for following:
-    - declare universal user variables for HighScore Link, Timer, Question/Start Div, correct/Wrong answer div
