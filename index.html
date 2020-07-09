@@ -61,11 +61,11 @@
             <div class="col-sm-12 text-center">
                 <h1>All Done!</h1>
                 <p id="score"></p>
-                <form class="form-inline">
+                <form class="form-inline" onsubmit="initialSubmit()">
                     <div class="form-group">
                         <label for="HSInitials" class="h3"></label>Enter Initials</label>
-                        <input type="password" class="form-control mx-3" id="HSInitials">
-                        <button type="submit" class="btn btn-primary" id="initialSubmit">Submit</button>
+                        <input type="text" name="initials" class="form-control mx-3" id="HSInitials">
+                        <button type="submit" class="btn btn-primary" id="submit">Submit</button>
                     </div>
                 </form>
             </div>

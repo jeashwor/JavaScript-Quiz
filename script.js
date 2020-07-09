@@ -11,6 +11,11 @@ var firstEl = document.getElementById("first");
 var questionBoxEl = document.getElementById("questionBox");
 var correctEl = document.getElementById("correct");
 var wrongEl = document.getElementById("wrong");
+var scorePageEl = document.getElementById("scorePage");
+var scoreEl = document.getElementById("score");
+var HSInitialsEl = document.getElementById("HSInitials");
+var submitEl = document.getElementById("submit");
+
 
 // Create Object with list of questions, possible answers, and correct answer
 var questionList = [
@@ -99,57 +104,93 @@ var questionList = [
 var lastQuestion = questionList.length -1;
 var questionIndex = 0;
 var timer = 100;
+var highScoreObject = [];
+var hsCounter = 0;
 
 
 
 
 
 function askQuestions() {
-    questionEl.innerHTML = questionList[questionIndex].question;
-    answerAEl.innerHTML = questionList[questionIndex].a;
-    answerBEl.innerHTML = questionList[questionIndex].b;
-    answerCEl.innerHTML = questionList[questionIndex].c;
-    answerDEl.innerHTML = questionList[questionIndex].d;
-}
+    if ( questionIndex < 10 ) {
+        questionEl.innerHTML = questionList[questionIndex].question;
+        answerAEl.innerHTML = questionList[questionIndex].a;
+        answerBEl.innerHTML = questionList[questionIndex].b;
+        answerCEl.innerHTML = questionList[questionIndex].c;
+        answerDEl.innerHTML = questionList[questionIndex].d;
+    } else {
+        setTimeout(function() {
+            questionBoxEl.classList.add("d-none");
+            scoreEl.innerHTML = "Your final score is " + timer;
+            timerEl.innerHTML = timer;
+            scorePageEl.classList.remove("d-none");
+            }, 500);
+        }
+ };
 
 function timerUpdate() {
     var myInterval = setInterval(function () {
         timer--;
-        timerEl.innerHTML = timer;
-        if (timer == 0) {
+        if ( timer == 0 || questionIndex == 10) {
             clearInterval(myInterval);
         }
-    }, 1000)
-}
+        timerEl.innerHTML = timer;
+    }, 1000); 
+};
 
 function checkAnswer(answer) {
     if ( answer == questionList[questionIndex].correct) {
         // answer is correct
         questionIndex++;
         correctEl.classList.remove("d-none");
+        askQuestions();
         setTimeout(function() {
             correctEl.classList.add("d-none");
-            askQuestions();
-        }, 1000);
+        }, 500);
     } else {
         // answer is wrong
         questionIndex++;
         wrongEl.classList.remove("d-none");
+        askQuestions();
         timer = timer - 10;
         setTimeout(function() {
             wrongEl.classList.add("d-none");
-            askQuestions();
-        }, 1000);
+        }, 500);
     }
-} 
+};
+
+function initialSubmit() {
+    event.preventDefault();
+    var userInput = HSInitialsEl.value;
+    highScoreObject[hsCounter] = { "user": userInput, "score": timer};
+    hsCounter++;
+    localStorage.setItem("initials", JSON.stringify(highScoreObject));
+    location.href = "./highScore.html"
+    var highScoreLocationEl = document.getElementById("highScoreLocation");
+    var userScores = localStorage.getItem("initials");
+    var newUserScoreObject = JSON.parse(userScores);
+    console.log(newUserScoreObject);
+
+    // highScoreLocationEl.innerHTML = 
+};
+
+function clearScore() {
+    localStorage.removeItem("initials");
+};
 
 quizStartEl.addEventListener("click", function (event) {
+    event.preventDefault();
     timerEl.innerHTML = timer;
     timerUpdate();
     firstEl.classList.add("d-none");
     questionBoxEl.classList.remove("d-none");
     askQuestions();
-})
+});
+
+// submitEl.addEventListener("click", function(event) {
+//     event.preventDefault();
+//     initialSubmit();
+// });
 
 
 
