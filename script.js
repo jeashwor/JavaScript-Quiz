@@ -170,6 +170,7 @@ function initialSubmit() {
     event.preventDefault();
     var userInput = HSInitialsEl.value;
     console.log(localStorage.getItem("initials.user"));
+    highScoreCounter++;
     if (localStorage.getItem("initials") === null) {
         var players = [];
         players.push({ "user": userInput, "score": timer });
@@ -185,15 +186,16 @@ function initialSubmit() {
 function addHighScore() {
     var highScoreLocationEl = document.getElementById("highScoreLocation");
     var userScores = localStorage.getItem("initials");
-
-    var newUserScoreObject = JSON.parse(userScores);
-    console.log(newUserScoreObject);
-    console.log(newUserScoreObject[0].user);
-    console.log(newUserScoreObject[0].score);
-    var newScoreDiv = document.createElement("li");
-    newScoreDiv.setAttribute("id", "hsItem")
-    newScoreDiv.innerHTML = newUserScoreObject[0].user + " - " + newUserScoreObject[0].score;
-    highScoreLocationEl.append(newScoreDiv);
+    if (userScores !== null) {
+        var newUserScoreObject = JSON.parse(userScores);
+        sortArray(newUserScoreObject);
+        for ( var i = 0; i <= newUserScoreObject.length; i++) {
+            var newScoreDiv = document.createElement("li");
+            newScoreDiv.setAttribute("id", "hs" + highScoreCounter);
+            newScoreDiv.innerHTML = newUserScoreObject[i].user + " - " + newUserScoreObject[i].score;
+            highScoreLocationEl.append(newScoreDiv);
+        }
+    }
 }
 
 function clearScore() {
@@ -202,6 +204,9 @@ function clearScore() {
     hsItemEl.remove();
 };
 
+function sortArray(array) {
+    array.sort((a, b) => b.score - a.score); 
+}
 
 
 
