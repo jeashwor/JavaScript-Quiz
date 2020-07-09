@@ -191,6 +191,7 @@ function addHighScore() {
         sortArray(newUserScoreObject);
         for ( var i = 0; i <= newUserScoreObject.length; i++) {
             var newScoreDiv = document.createElement("li");
+            newScoreDiv.setAttribute("class", "scoreItem");
             newScoreDiv.setAttribute("id", "hs" + highScoreCounter);
             newScoreDiv.innerHTML = newUserScoreObject[i].user + " - " + newUserScoreObject[i].score;
             highScoreLocationEl.append(newScoreDiv);
@@ -200,8 +201,9 @@ function addHighScore() {
 
 function clearScore() {
     localStorage.removeItem("initials");
-    var hsItemEl = document.getElementById("hsItem");
+    var hsItemEl = document.getElementsByClassName("scoreItem");
     hsItemEl.remove();
+    highScoreCounter = 0;
 };
 
 function sortArray(array) {
