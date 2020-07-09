@@ -1,5 +1,4 @@
 // Declare Global Variables
-var quizStartEl = document.getElementById("quizStart");
 var timerEl = document.getElementById("timer");
 var questionEl = document.getElementById("questions");
 var answerDeclarationEl = document.getElementById("correct");
@@ -101,50 +100,58 @@ var questionList = [
     },
 ]
 
-var lastQuestion = questionList.length -1;
+var lastQuestion = questionList.length - 1;
 var questionIndex = 0;
 var timer = 100;
 var highScoreObject = [];
-var hsCounter = 0;
 
 
 
 
+
+function start() {
+    event.preventDefault();
+    timerEl.innerHTML = timer;
+    timerUpdate();
+    firstEl.classList.add("d-none");
+    questionBoxEl.classList.remove("d-none");
+    askQuestions();
+};
 
 function askQuestions() {
-    if ( questionIndex < 10 ) {
+    if (questionIndex < 10) {
         questionEl.innerHTML = questionList[questionIndex].question;
         answerAEl.innerHTML = questionList[questionIndex].a;
         answerBEl.innerHTML = questionList[questionIndex].b;
         answerCEl.innerHTML = questionList[questionIndex].c;
         answerDEl.innerHTML = questionList[questionIndex].d;
     } else {
-        setTimeout(function() {
+        setTimeout(function () {
             questionBoxEl.classList.add("d-none");
             scoreEl.innerHTML = "Your final score is " + timer;
             timerEl.innerHTML = timer;
             scorePageEl.classList.remove("d-none");
-            }, 500);
-        }
- };
+        }, 500);
+    }
+};
 
 function timerUpdate() {
     var myInterval = setInterval(function () {
-        timer--;
-        if ( timer == 0 || questionIndex == 10) {
+        if (timer == 0 || questionIndex == 10) {
             clearInterval(myInterval);
         }
+        timer--;
         timerEl.innerHTML = timer;
-    }, 1000); 
+    }, 1000);
 };
 
 function checkAnswer(answer) {
-    if ( answer == questionList[questionIndex].correct) {
+    if (answer == questionList[questionIndex].correct) {
         // answer is correct
         questionIndex++;
         correctEl.classList.remove("d-none");
         askQuestions();
-        setTimeout(function() {
+        setTimeout(function () {
             correctEl.classList.add("d-none");
         }, 500);
     } else {
@@ -153,7 +160,7 @@ function checkAnswer(answer) {
         wrongEl.classList.remove("d-none");
         askQuestions();
         timer = timer - 10;
-        setTimeout(function() {
+        setTimeout(function () {
             wrongEl.classList.add("d-none");
         }, 500);
     }
@@ -162,35 +169,32 @@ function checkAnswer(answer) {
 function initialSubmit() {
     event.preventDefault();
     var userInput = HSInitialsEl.value;
-    highScoreObject[hsCounter] = { "user": userInput, "score": timer};
-    hsCounter++;
+    var newScoreLog = { "user": userInput, "score": timer };
+    highScoreObject.push(newScoreLog);
     localStorage.setItem("initials", JSON.stringify(highScoreObject));
     location.href = "./highScore.html"
+    // addHighScore();
+};
+
+function addHighScore() {
     var highScoreLocationEl = document.getElementById("highScoreLocation");
     var userScores = localStorage.getItem("initials");
     var newUserScoreObject = JSON.parse(userScores);
     console.log(newUserScoreObject);
-
-    // highScoreLocationEl.innerHTML = 
-};
+    console.log(newUserScoreObject[0].user);
+    console.log(newUserScoreObject[0].score);
+    var newScoreDiv = document.createElement("div");
+    newScoreDiv.setAttribute("id", "hsItem")
+    newScoreDiv.innerHTML = newUserScoreObject[0].user + " - " + newUserScoreObject[0].score;
+    highScoreLocationEl.append(newScoreDiv);
+}
 
 function clearScore() {
     localStorage.removeItem("initials");
+    var hsItemEl = document.getElementById("hsItem");
+    hsItemEl.remove();
 };
 
-quizStartEl.addEventListener("click", function (event) {
-    event.preventDefault();
-    timerEl.innerHTML = timer;
-    timerUpdate();
-    firstEl.classList.add("d-none");
-    questionBoxEl.classList.remove("d-none");
-    askQuestions();
-});
-
-// submitEl.addEventListener("click", function(event) {
-//     event.preventDefault();
-//     initialSubmit();
-// });
 
 
 

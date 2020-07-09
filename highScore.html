@@ -14,11 +14,11 @@
     <!-- High Score Page Container -->
     <main class="container-sm" style="max-width: 600px;">
         <div class="row">
+            <h1 class="col-sm-12 text-center">High Scores</h1>
+            <div class="col-sm-12 bg-secondary mb-3 h5" id="highScoreLocation"></div>
             <div class="col-sm-12 text-center">
-                <h1>High Scores</h1>
-                <div id="highScoreLocation"></div>
                 <a type="button" href="./index.html" class="btn btn-primary">Go Back</a>
-                <button type="button" class="btn btn-warning" onclick="clearScores()">Clear Scores</button>
+                <button type="button" class="btn btn-warning" onclick="clearScore()">Clear Scores</button>
             </div>
         </div>
     </main>
@@ -32,6 +32,9 @@
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
         crossorigin="anonymous"></script>
     <script src="./script.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        addHighScore();
+    </script>
 </body>
 
 </html>
