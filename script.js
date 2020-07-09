@@ -103,8 +103,7 @@ var questionList = [
 var lastQuestion = questionList.length - 1;
 var questionIndex = 0;
 var timer = 100;
-var highScoreObject = [];
-
+var highScoreCounter = 0;
 
 
 
@@ -139,9 +138,10 @@ function timerUpdate() {
     var myInterval = setInterval(function () {
         if (timer == 0 || questionIndex == 10) {
             clearInterval(myInterval);
+        } else {
+            timer--;
+            timerEl.innerHTML = timer;
         }
-        timer--;
-        timerEl.innerHTML = timer;
     }, 1000);
 };
 
@@ -169,21 +169,28 @@ function checkAnswer(answer) {
 function initialSubmit() {
     event.preventDefault();
     var userInput = HSInitialsEl.value;
-    var newScoreLog = { "user": userInput, "score": timer };
-    highScoreObject.push(newScoreLog);
-    localStorage.setItem("initials", JSON.stringify(highScoreObject));
+    console.log(localStorage.getItem("initials.user"));
+    if (localStorage.getItem("initials") === null) {
+        var players = [];
+        players.push({ "user": userInput, "score": timer });
+        localStorage.setItem("initials", JSON.stringify(players));
+    } else {
+        var players = JSON.parse(localStorage.getItem("initials"));
+        players.push({ "user": userInput, "score": timer });
+        localStorage.setItem("initials", JSON.stringify(players));
+    }
     location.href = "./highScore.html"
-    // addHighScore();
 };
 
 function addHighScore() {
     var highScoreLocationEl = document.getElementById("highScoreLocation");
     var userScores = localStorage.getItem("initials");
+
     var newUserScoreObject = JSON.parse(userScores);
     console.log(newUserScoreObject);
     console.log(newUserScoreObject[0].user);
     console.log(newUserScoreObject[0].score);
-    var newScoreDiv = document.createElement("div");
+    var newScoreDiv = document.createElement("li");
     newScoreDiv.setAttribute("id", "hsItem")
     newScoreDiv.innerHTML = newUserScoreObject[0].user + " - " + newUserScoreObject[0].score;
     highScoreLocationEl.append(newScoreDiv);
