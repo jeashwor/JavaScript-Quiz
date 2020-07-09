@@ -1,4 +1,4 @@
-// Declare Global Variables
+// Declare Global Variables related to API 
 var timerEl = document.getElementById("timer");
 var questionEl = document.getElementById("questions");
 var answerDeclarationEl = document.getElementById("correct");
@@ -14,7 +14,6 @@ var scorePageEl = document.getElementById("scorePage");
 var scoreEl = document.getElementById("score");
 var HSInitialsEl = document.getElementById("HSInitials");
 var submitEl = document.getElementById("submit");
-
 
 // Create Object with list of questions, possible answers, and correct answer
 var questionList = [
@@ -100,14 +99,13 @@ var questionList = [
     },
 ]
 
+// Establish global variables needed for timer, question counting, and final high score display
 var lastQuestion = questionList.length - 1;
 var questionIndex = 0;
 var timer = 100;
 var highScoreCounter = 0;
 
-
-
-
+// Function to start game.
 function start() {
     event.preventDefault();
     timerEl.innerHTML = timer;
@@ -117,6 +115,7 @@ function start() {
     askQuestions();
 };
 
+// Function to display each question or switch to Initial submit screen
 function askQuestions() {
     if (questionIndex < 10) {
         questionEl.innerHTML = questionList[questionIndex].question;
@@ -134,6 +133,7 @@ function askQuestions() {
     }
 };
 
+// Function to begin timer and update header display accordingly
 function timerUpdate() {
     var myInterval = setInterval(function () {
         if (timer == 0 || questionIndex == 10) {
@@ -145,6 +145,7 @@ function timerUpdate() {
     }, 1000);
 };
 
+// Function to check button click of answers against question object index.
 function checkAnswer(answer) {
     if (answer == questionList[questionIndex].correct) {
         // answer is correct
@@ -166,6 +167,8 @@ function checkAnswer(answer) {
     }
 };
 
+// Function to to take data from Initials field in form and store into local Storage for use.
+// Changes page to highScore.html
 function initialSubmit() {
     event.preventDefault();
     var userInput = HSInitialsEl.value;
@@ -183,6 +186,7 @@ function initialSubmit() {
     location.href = "./highScore.html"
 };
 
+// Adds high score from quiz to highScore.html page
 function addHighScore() {
     var highScoreLocationEl = document.getElementById("highScoreLocation");
     var userScores = localStorage.getItem("initials");
@@ -199,6 +203,7 @@ function addHighScore() {
     }
 }
 
+// Function to clear scores in local storage and on screen when button is pressed.
 function clearScore() {
     localStorage.removeItem("initials");
     var hsItemEl = document.getElementsByClassName("scoreItem");
@@ -206,6 +211,7 @@ function clearScore() {
     highScoreCounter = 0;
 };
 
+// Function to sort array in order of highest score first
 function sortArray(array) {
     array.sort((a, b) => b.score - a.score); 
 }
