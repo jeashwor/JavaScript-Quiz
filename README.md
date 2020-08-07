@@ -1,5 +1,9 @@
 # JavaScript-Quiz
 
+Link: https://jeashwor.github.io/JavaScript-Quiz/
+
+Github Repo: https://github.com/jeashwor/JavaScript-Quiz
+
 ![Screen Shot](./ScreenShot.png)
 
 ### Given Prompt:
